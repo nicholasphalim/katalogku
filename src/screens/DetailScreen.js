@@ -2,6 +2,7 @@ import { ScrollView, View, Text, Image, StyleSheet } from 'react-native';
 import HeaderBar from '../components/HeaderBar';
 import Button from '../components/Button';
 import { DUMMY_PRODUCTS } from '../data/dummy';
+import { useFavorit } from '../context/FavoritContext';
 import { COLORS } from '../theme/colors';
 
 export default function DetailScreen({ route, navigation }) {
@@ -9,6 +10,9 @@ export default function DetailScreen({ route, navigation }) {
   // Modul 7: pencarian ini diganti permintaan ke API berdasarkan id.
   const { id } = route.params;
   const product = DUMMY_PRODUCTS.find((p) => p.id === id);
+  // Hook dipanggil sebelum `return` mana pun (aturan hooks)
+  const { isFavorit, toggleFavorit } = useFavorit();
+  const fav = isFavorit(id);
 
   if (!product) {
     return (
@@ -32,7 +36,10 @@ export default function DetailScreen({ route, navigation }) {
         <Text style={styles.price}>$ {product.price}</Text>
         <Text style={styles.rating}>Rating {product.rating} / 5</Text>
         <Text style={styles.desc}>{product.description}</Text>
-        <Button title="Tambah ke Favorit" onPress={() => {}} />
+        <Button
+          title={fav ? 'Hapus dari Favorit' : 'Tambah ke Favorit'}
+          variant={fav ? 'outline' : 'primary'}
+          onPress={() => toggleFavorit(product)} />
       </ScrollView>
     </View>
   );

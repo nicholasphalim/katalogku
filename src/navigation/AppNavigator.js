@@ -10,6 +10,7 @@ import FavoritScreen from '../screens/FavoritScreen';
 import CartScreen from '../screens/CartScreen';
 import ProfilScreen from '../screens/ProfilScreen';
 import TentangScreen from '../screens/TentangScreen';
+import { useFavorit } from '../context/FavoritContext';
 import { COLORS } from '../theme/colors';
 
 const Stack = createNativeStackNavigator();
@@ -20,6 +21,7 @@ const ICONS = {
 
 // Tab bawah: Beranda | Favorit | Keranjang | Profil
 function TabNavigator() {
+  const { favorit } = useFavorit(); // untuk badge jumlah favorit
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -31,7 +33,8 @@ function TabNavigator() {
         ),
       })}>
       <Tab.Screen name="Beranda" component={HomeScreen} />
-      <Tab.Screen name="Favorit" component={FavoritScreen} />
+      <Tab.Screen name="Favorit" component={FavoritScreen}
+        options={{ tabBarBadge: favorit.length || undefined }} />
       <Tab.Screen name="Keranjang" component={CartScreen} />
       <Tab.Screen name="Profil" component={ProfilScreen} />
     </Tab.Navigator>

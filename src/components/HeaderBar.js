@@ -12,9 +12,11 @@ export default function HeaderBar({ title, subtitle, onBack }) {
           <Ionicons name="arrow-back" size={24} color={COLORS.card} />
         </Pressable>
       ) : null}
-      <View>
-        <Text style={styles.title}>{title}</Text>
-        {subtitle ? <Text style={styles.sub}>{subtitle}</Text> : null}
+      <View style={styles.texts}>
+        <Text style={styles.title} numberOfLines={1}>{title}</Text>
+        {subtitle ? (
+          <Text style={styles.sub} numberOfLines={1}>{subtitle}</Text>
+        ) : null}
       </View>
     </View>
   );
@@ -27,6 +29,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16, paddingBottom: 14,
   },
   back: { marginRight: 12 },
+  texts: { flex: 1 }, // judul panjang dipotong "..." (Modul 5)
   title: { color: COLORS.card, fontSize: 20, fontWeight: 'bold' },
   sub: { color: COLORS.border, fontSize: 13, marginTop: 2 },
 });
